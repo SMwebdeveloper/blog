@@ -1,25 +1,14 @@
 <template lang="">
   <div class="wrapper-content wrapper-content--fixed">
-    <section class="post">
-      <div class="container">
-        <!-- Header -->
-
-        <div class="post-header">
-          <img :src="post.img" :alt="post.title" />
-          <h1 class="title">{{ post.title }}</h1>
-          <p>{{ post.descr }}</p>
-        </div>
-
-        <!-- body -->
-        <div class="post-body">
-          <p>{{ post.content }}</p>
-        </div>
-      </div>
-    </section>
+   <post :post="post"/>
   </div>
 </template>
 <script>
+import post from '@/components/Blog/Post.vue';
 export default {
+    components:{
+      post
+    },
   data() {
     return {
       post: {
