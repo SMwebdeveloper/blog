@@ -1,13 +1,19 @@
 <template lang="">
   <div class="wrapper-content wrapper-content--fixed">
    <post :post="post"/>
+   <comments :comments="comments"/>
+   <newComment/>
   </div>
 </template>
 <script>
 import post from '@/components/Blog/Post.vue';
+import newComment from '@/components/Comments/NewComment.vue';
+import comments from '@/components/Comments/Comments.vue';
 export default {
     components:{
-      post
+      post,
+      newComment,
+      comments
     },
   data() {
     return {
@@ -18,6 +24,10 @@ export default {
         content:"Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit",
         img: "https://images.unsplash.com/photo-1587300003388-59208cc962cb?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80",
       },
+      comments:[
+        {name:'Alex', text:'Lorem ipsum dolor sit amet, consectetur adipiscing elit'},
+        {name:'Evgenii', text:'Lorem ipsum dolor sit amet, consectetur adipiscing elit'}
+      ]
     };
   },
 };
