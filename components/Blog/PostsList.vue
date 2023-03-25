@@ -4,6 +4,7 @@
       <div class="posts__wrapper">
         <postPreview v-for="post in posts" :key="post.id" :post="post"/>
       </div>
+      <!-- <p>{{posts}}</p> -->
     </div>
   </section>
 </template>
