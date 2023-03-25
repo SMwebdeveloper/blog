@@ -1,6 +1,7 @@
 <template>
     <section class="intro">
         <h1>{{title}}</h1>
+        <slot/>
     </section>
 </template>
 <script>
