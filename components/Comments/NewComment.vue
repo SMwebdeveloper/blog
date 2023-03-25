@@ -19,17 +19,7 @@
   </section>
 </template>
 <script>
-import Message from "@/components/UI/Message.vue";
-import AppButton from "@/components/UI/Controls/Button.vue";
-import AppInput from "@/components/UI/Controls/Input.vue";
-import AppTextarea from "@/components/UI/Controls/Textarea.vue";
 export default {
-  components: {
-    Message,
-    AppButton,
-    AppInput,
-    AppTextarea,
-  },
   data() {
     return {
       message: null,
