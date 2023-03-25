@@ -5,9 +5,7 @@
             <h3 class="title">{{post.title}}</h3>
             <p>{{post.descr}}</p>
         </div>
-        <p>{{post.descr}}</p>
     </nuxt-link>
-    
 </template>
 <script>
 export default {
