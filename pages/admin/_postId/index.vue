@@ -9,6 +9,7 @@ export default {
   components: {
     NewPostForm,
   },
+  layout:'admin',
   data() {
     return {
       post: {
