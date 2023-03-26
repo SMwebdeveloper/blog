@@ -1,5 +1,5 @@
 <template>
-    <PostsList :posts="posts" />
+    <PostsList :admin=true :posts="posts" />
 </template>
 <script>
 import PostsList from "@/components/Blog/PostsList.vue";
