@@ -14,9 +14,10 @@
 <script>
 import Header from "../components/system/Header.vue";
 export default {
+  middleware:'auth',
   components: {
     Header,
-  },
+  }
 };
 </script>
 <style lang=""></style>
