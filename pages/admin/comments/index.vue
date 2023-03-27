@@ -26,6 +26,7 @@
 </template>
 <script>
 import commentTable from "@/components/Admin/CommentTable.vue";
+
 export default {
   components: {
     commentTable,
@@ -49,7 +50,9 @@ export default {
       });
     },
     deleteComment (id){
-      console.log(`delete comment ${id}`);
+        this.comments = this.comments.filter(item => {
+            return item.id !== id
+        })
     }
   },
 };
