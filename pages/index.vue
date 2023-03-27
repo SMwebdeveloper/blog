@@ -1,45 +1,60 @@
 <template>
-  <div class="wrapper-content wrapper-content--fixed ">
-    <promo/>
-    <Intro title="My lasts posts:"/>
-    <PostsList :posts="posts"/>
-    <contacts/>
+  <div class="wrapper-content wrapper-content--fixed">
+    <promo />
+    <Intro title="My lasts posts:" />
+    <PostsList :posts="posts" />
+    <contacts />
     <!-- <p>{{ posts }}</p> -->
   </div>
 </template>
 
 <script>
-import promo from '@/components/Promo.vue';
-import contacts from '@/components/Contacts.vue';
+import promo from "@/components/Promo.vue";
+import contacts from "@/components/Contacts.vue";
 
 export default {
-  components:{
+  components: {
     promo,
     contacts,
   },
-  data () {
-    return {
-      posts:[
-        {
-          id:1,
-          title:'1 post',
-          descr: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
-          img:'https://images.unsplash.com/photo-1587300003388-59208cc962cb?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80'
-        },
-        {
-          id:2,
-          title:'2 post',
-          descr: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
-          img:'https://images.unsplash.com/photo-1543466835-00a7907e9de1?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1074&q=80'
-        },
-        {
-          id:3,
-          title:'3 post',
-          descr: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit',
-          img:'https://images.unsplash.com/photo-1576201836106-db1758fd1c97?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80'
-        },
-      ]
-    }
-  }
-}
+  asyncData(context) {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        resolve({
+          posts: [
+            {
+              id: 1,
+              title: "1 post",
+              descr: "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
+              img: "https://images.unsplash.com/photo-1587300003388-59208cc962cb?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80",
+            },
+          ],
+        });
+      }, 1500);
+    })
+      .then((data) => {
+        return data;
+      })
+      .catch((e) => {
+        context.error(e);
+      });
+  },
+  // data() {
+  //   return {
+  //     posts: [],
+  //   };
+  // },
+  // created() {
+  //   setTimeout(() => {
+  //     this.posts = [
+  //       {
+  //         id: 1,
+  //         title: "1 post",
+  //         descr: "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
+  //         img: "https://images.unsplash.com/photo-1587300003388-59208cc962cb?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80",
+  //       },
+  //     ];
+  //   }, 1500);
+  // },
+};
 </script>
