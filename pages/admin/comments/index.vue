@@ -42,7 +42,11 @@ export default {
   layout: "admin",
   methods: {
     changeComment(id) {
-      console.log(`change status ${id}`);
+      return this.comments.forEach(item => {
+        if(id === item.id){
+         return item.status = !item.status
+        }
+      });
     },
     deleteComment (id){
       console.log(`delete comment ${id}`);
