@@ -11,13 +11,11 @@
 <script>
 import promo from '@/components/Promo.vue';
 import contacts from '@/components/Contacts.vue';
-import PostsList from '@/components/Blog/PostsList.vue';
 
 export default {
   components:{
     promo,
     contacts,
-    PostsList
   },
   data () {
     return {

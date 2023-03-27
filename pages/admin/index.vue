@@ -2,13 +2,10 @@
     <PostsList :admin=true :posts="posts" />
 </template>
 <script>
-import PostsList from "@/components/Blog/PostsList.vue";
 
 export default {
   layout: "admin",
-  components: {
-    PostsList,
-  },
+  
   data() {
     return {
       posts: [
