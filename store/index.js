@@ -2,6 +2,7 @@ import axios from "axios";
 
 export const state = () => ({
   postsLoaded: [],
+  commentsLoaded:[]
 });
 
 export const mutations = {
@@ -12,13 +13,20 @@ export const mutations = {
     // console.log(post);
     state.postsLoaded.push(post);
   },
-  editPost(state, postEdit){
-    const postIndex = state.postsLoaded.findIndex(post => post.id === postEdit.id)
-    state.postsLoaded[postIndex] = postEdit
+  editPost(state, postEdit) {
+    const postIndex = state.postsLoaded.findIndex(
+      (post) => post.id === postEdit.id
+    );
+    state.postsLoaded[postIndex] = postEdit;
+  },
+  addComment(state, comment){
+    console.log(comment);
+    state.commentsLoaded.push(comment)
   }
 };
 
 export const actions = {
+  // server init
   nuxtServerInit({ commit }, contex) {
     return axios
       .get(
@@ -34,6 +42,7 @@ export const actions = {
       })
       .catch((error) => console.log(error));
   },
+  // add post
   addPost({ commit }, post) {
     // console.log(post);
     return axios
@@ -48,13 +57,30 @@ export const actions = {
       })
       .catch((e) => console.log(e));
   },
-  editPost ({commit}, post){
-    return axios.put(`https://blog-nuxt-eff9a-default-rtdb.asia-southeast1.firebasedatabase.app/posts/${post.id}.json`, post)
-     .then(res =>{
-      commit('editPost', post)
-     })
-     .catch(e => console.log(e))
-  }
+  // edit post
+  editPost({ commit }, post) {
+    return axios
+      .put(
+        `https://blog-nuxt-eff9a-default-rtdb.asia-southeast1.firebasedatabase.app/posts/${post.id}.json`,
+        post
+      )
+      .then((res) => {
+        commit("editPost", post);
+      })
+      .catch((e) => console.log(e));
+  },
+  // addComment
+  addComment({ commit }, comment) {
+    return axios
+      .put(
+        `https://blog-nuxt-eff9a-default-rtdb.asia-southeast1.firebasedatabase.app/comments.json`,
+        comment
+      )
+      .then(() => {
+        commit("addComment", { ...comment, id:res.data.name });
+      })
+      .catch(e => console.log(e))
+  },
 };
 
 export const getters = {
