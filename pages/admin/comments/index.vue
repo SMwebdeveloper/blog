@@ -1,23 +1,29 @@
 <template lang="">
   <no-ssr>
-    <commentTable :thead="['Name', 'Text','Status','Change Status', 'Delete']">
+    <commentTable
+      :thead="['Name', 'Text', 'Status', 'Change Status', 'Delete']"
+    >
       <template #tbody>
         <tr v-for="comment in comments" :key="comment.id">
           <td>
-            <span>{{comment.name}}</span>
+            <span>{{ comment.name }}</span>
           </td>
           <td>
-            <span>{{comment.text}}</span>
+            <span>{{ comment.text }}</span>
           </td>
           <td>
             <span v-if="comment.publish" class="status true">Publish</span>
             <span v-else class="status false">Hide</span>
           </td>
           <td>
-            <span @click="changeComment(comment)" class="link">Change Status</span>
+            <span @click="changeComment(comment)" class="link"
+              >Change Status</span
+            >
           </td>
           <td>
-            <span @click="deleteComment(comment.id)" class="link">Delete Status</span>
+            <span @click="deleteComment(comment.id)" class="link"
+              >Delete Status</span
+            >
           </td>
         </tr>
       </template>
@@ -26,45 +32,50 @@
 </template>
 <script>
 import commentTable from "@/components/Admin/CommentTable.vue";
-import axios from 'axios';
+import axios from "axios";
 
 export default {
   components: {
     commentTable,
   },
-  layout:'admin',
+  layout: "admin",
   data() {
     return {
-      comments:[]
+      comments: [],
     };
   },
-  created(){
-    axios.get(`https://blog-nuxt-eff9a-default-rtdb.asia-southeast1.firebasedatabase.app/comments.json`)
-         .then((res) => {
-          let commentsArray = []
-          Object.keys(res.data).forEach(key => {
-            const comment = res.data[key]
-            commentsArray.push({...comment, id:key})
-          })
-          this.comments = commentsArray
-          // console.log(commentsArray);
-         })
+  mounted() {
+    this.loadComments();
   },
   layout: "admin",
   methods: {
-    changeComment(comment) {
-      comment.publish = ! comment.publish
+    loadComments() {
       axios
-      .put(
+        .get(
+          `https://blog-nuxt-eff9a-default-rtdb.asia-southeast1.firebasedatabase.app/comments.json`
+        )
+        .then((res) => {
+          let commentsArray = [];
+          Object.keys(res.data).forEach((key) => {
+            const comment = res.data[key];
+            commentsArray.push({ ...comment, id: key });
+          });
+          this.comments = commentsArray;
+          // console.log(commentsArray);
+        });
+    },
+    changeComment(comment) {
+      comment.publish = !comment.publish;
+      axios.put(
         `https://blog-nuxt-eff9a-default-rtdb.asia-southeast1.firebasedatabase.app/comments/${comment.id}.json`,
         comment
-      )
+      );
     },
-    deleteComment (id){
-      axios
-      .delete(
+    deleteComment(id) {
+      axios.delete(
         `https://blog-nuxt-eff9a-default-rtdb.asia-southeast1.firebasedatabase.app/comments/${id}.json`
       )
+      .then(()=>this.loadComments())
     }
   },
 };
