@@ -14,7 +14,7 @@
             <span v-else class="status false">Hide</span>
           </td>
           <td>
-            <span @click="changeComment(comment.id)" class="link">Change Status</span>
+            <span @click="changeComment(comment)" class="link">Change Status</span>
           </td>
           <td>
             <span @click="deleteComment(comment.id)" class="link">Delete Status</span>
@@ -52,17 +52,19 @@ export default {
   },
   layout: "admin",
   methods: {
-    changeComment(id) {
-      return this.comments.forEach(item => {
-        if(id === item.id){
-         return item.status = !item.status
-        }
-      });
+    changeComment(comment) {
+      comment.publish = ! comment.publish
+      axios
+      .put(
+        `https://blog-nuxt-eff9a-default-rtdb.asia-southeast1.firebasedatabase.app/comments/${comment.id}.json`,
+        comment
+      )
     },
     deleteComment (id){
-        this.comments = this.comments.filter(item => {
-            return item.id !== id
-        })
+      axios
+      .delete(
+        `https://blog-nuxt-eff9a-default-rtdb.asia-southeast1.firebasedatabase.app/comments/${id}.json`
+      )
     }
   },
 };
