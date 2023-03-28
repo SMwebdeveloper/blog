@@ -35,6 +35,9 @@ export default {
 
     img{
         margin-bottom: 16px;
+        width: 400px;
+        height: 300px;
+        object-fit: cover;
     }
 
     .post-content{
