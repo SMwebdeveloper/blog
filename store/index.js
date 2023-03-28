@@ -6,27 +6,33 @@ export const state = () => ({
 
 export const mutations = {
   setPosts(state, posts) {
-    state.postsLoaded = posts
+    state.postsLoaded = posts;
   },
   addPost(state, post) {
     // console.log(post);
     state.postsLoaded.push(post);
   },
+  editPost(state, postEdit){
+    const postIndex = state.postsLoaded.findIndex(post => post.id === postEdit.id)
+    state.postsLoaded[postIndex] = postEdit
+  }
 };
 
 export const actions = {
   nuxtServerInit({ commit }, contex) {
-    return axios.get(
-      "https://blog-nuxt-eff9a-default-rtdb.asia-southeast1.firebasedatabase.app/posts.json"
-    )
-    .then((res) => {
-      const posts = []
-      for(let key in res.data){
-        posts.push({...res.data[key], id:key})
-      }
-      console.log(posts);
-      commit('setPosts', posts)
-    }).catch(error => console.log(error))
+    return axios
+      .get(
+        "https://blog-nuxt-eff9a-default-rtdb.asia-southeast1.firebasedatabase.app/posts.json"
+      )
+      .then((res) => {
+        const posts = [];
+        for (let key in res.data) {
+          posts.push({ ...res.data[key], id: key });
+        }
+        console.log(posts);
+        commit("setPosts", posts);
+      })
+      .catch((error) => console.log(error));
   },
   addPost({ commit }, post) {
     // console.log(post);
@@ -42,6 +48,13 @@ export const actions = {
       })
       .catch((e) => console.log(e));
   },
+  editPost ({commit}, post){
+    return axios.put(`https://blog-nuxt-eff9a-default-rtdb.asia-southeast1.firebasedatabase.app/posts/${post.id}.json`, post)
+     .then(res =>{
+      commit('editPost', post)
+     })
+     .catch(e => console.log(e))
+  }
 };
 
 export const getters = {

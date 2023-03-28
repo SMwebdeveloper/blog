@@ -5,28 +5,29 @@
 </template>
 <script>
 import NewPostForm from "@/components/Admin/NewPostForm.vue";
+import axios from "axios";
 export default {
   components: {
     NewPostForm,
   },
   layout:'admin',
-  data() {
-    return {
-      post: {
-        id: 1,
-        title: "1 post",
-        descr: "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
-        content:
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit",
-        img: "https://images.unsplash.com/photo-1587300003388-59208cc962cb?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80",
-      },
-    };
+  asyncData(contex) {
+      return axios.get(`https://blog-nuxt-eff9a-default-rtdb.asia-southeast1.firebasedatabase.app/posts/${contex.params.postId}.json`)
+      .then(res => {
+        return {
+          post: {...res.data, id:contex.params.postId}
+        }
+      })
+      .catch((e)=> contex(e))
   },
   layout: "admin",
   methods: {
     onSubmit(post) {
       console.log("Post editing!");
-      console.log(post);
+      this.$store.dispatch('editPost', post)
+      .then(() => {
+        this.$router.push('/admin')
+      })
     },
   },
 };
