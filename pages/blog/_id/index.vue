@@ -6,6 +6,8 @@
   </div>
 </template>
 <script>
+import axios from 'axios';
+
 import post from '@/components/Blog/Post.vue';
 import newComment from '@/components/Comments/NewComment.vue';
 import comments from '@/components/Comments/Comments.vue';
@@ -15,21 +17,31 @@ export default {
       newComment,
       comments
     },
-  data() {
-    return {
-      post: {
-        id: 1,
-        title: "1 post",
-        descr: "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
-        content:"Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit",
-        img: "https://images.unsplash.com/photo-1587300003388-59208cc962cb?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80",
-      },
-      comments:[
-        {name:'Alex', text:'Lorem ipsum dolor sit amet, consectetur adipiscing elit'},
-        {name:'Evgenii', text:'Lorem ipsum dolor sit amet, consectetur adipiscing elit'}
-      ]
-    };
-  },
+   async asyncData (context) {
+      let [post, comments] = await Promise.all([
+        axios.get(`https://blog-nuxt-eff9a-default-rtdb.asia-southeast1.firebasedatabase.app/posts/${context.params.id}.json`),
+        axios.get(`https://blog-nuxt-eff9a-default-rtdb.asia-southeast1.firebasedatabase.app/comments.json`)
+      ])
+      return {
+        post:post.data,
+        comments:comments.data
+      }
+    },
+  // data() {
+  //   return {
+  //     post: {
+  //       id: 1,
+  //       title: "1 post",
+  //       descr: "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
+  //       content:"Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit",
+  //       img: "https://images.unsplash.com/photo-1587300003388-59208cc962cb?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80",
+  //     },
+  //     comments:[
+  //       {name:'Alex', text:'Lorem ipsum dolor sit amet, consectetur adipiscing elit'},
+  //       {name:'Evgenii', text:'Lorem ipsum dolor sit amet, consectetur adipiscing elit'}
+  //     ]
+  //   };
+  // },
 };
 </script>
 <style lang="scss">

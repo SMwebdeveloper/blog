@@ -72,7 +72,7 @@ export const actions = {
   // addComment
   addComment({ commit }, comment) {
     return axios
-      .put(
+      .post(
         `https://blog-nuxt-eff9a-default-rtdb.asia-southeast1.firebasedatabase.app/comments.json`,
         comment
       )
