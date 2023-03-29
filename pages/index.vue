@@ -17,37 +17,29 @@ export default {
     promo,
     contacts,
   },
-  data(){
-    return{
-      posts:[]
-    }
+  head() {
+    let title = "My SSR Bkog!",
+      descr = "My SSR Bkog! With Nuxt.js!",
+      type = "site";
+    return {
+      title: title,
+      meta: [
+        { hid: "og:title", name: "og:title", content: title },
+        { hid: "description", name: "description", content: descr },
+        { hid: "og:description", name: "og:description", content: descr },
+        { hid: "og:type", name: "og:type", content: type },
+      ],
+    };
   },
-  // asyncData(context) {
-  //   return new Promise((resolve, reject) => {
-  //     setTimeout(() => {
-  //       resolve({
-  //         posts: [
-  //           {
-  //             id: 1,
-  //             title: "1 post",
-  //             descr: "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
-  //             img: "https://images.unsplash.com/photo-1587300003388-59208cc962cb?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80",
-  //           },
-  //         ],
-  //       });
-  //     }, 1500);
-  //   })
-  //     .then((data) => {
-  //       return data;
-  //     })
-  //     .catch((e) => {
-  //       context.error(e);
-  //     });
-  // },
-  computed:{
+  data() {
+    return {
+      posts: [],
+    };
+  },
+  computed: {
     postsLoaded() {
-      return this.$store.getters.getPostsLoaded
-    }
-  }
+      return this.$store.getters.getPostsLoaded;
+    },
+  },
 };
 </script>
