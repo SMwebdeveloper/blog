@@ -22,6 +22,9 @@ export const mutations = {
   setToken(state, token){
     console.log(token);
     state.token = token
+  },
+  destroyToken(state){
+    state.token = null
   }
 };
 
@@ -42,6 +45,7 @@ export const actions = {
       })
       .catch((error) => console.log(error));
   },
+  // auth user
   authUser({commit}, authData){
     const key = 'AIzaSyAXei2MlAJN0lk5VkPQIUNkV-4FYlhNaJc'
     return axios.post(`https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${key}`, {
@@ -51,6 +55,10 @@ export const actions = {
     })
     .then((res) => {commit('setToken', res.data.idToken)})
     .catch(e=> console.log(e))
+  },
+  // log out
+  logoutUser({commit}){
+    commit('destroyToken')
   },
   // add post
   addPost({ commit }, post) {
