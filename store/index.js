@@ -2,7 +2,7 @@ import axios from "axios";
 
 export const state = () => ({
   postsLoaded: [],
-  commentsLoaded:[]
+  token:null
 });
 
 export const mutations = {
@@ -19,9 +19,9 @@ export const mutations = {
     );
     state.postsLoaded[postIndex] = postEdit;
   },
-  addComment(state, comment){
-    console.log(comment);
-    state.commentsLoaded.push(comment)
+  setToken(state, token){
+    console.log(token);
+    state.token = token
   }
 };
 
@@ -49,6 +49,8 @@ export const actions = {
       password:authData.password,
       returnSecureToken:true
     })
+    .then((res) => {commit('setToken', res.data.idToken)})
+    .catch(e=> console.log(e))
   },
   // add post
   addPost({ commit }, post) {
@@ -66,10 +68,10 @@ export const actions = {
       .catch((e) => console.log(e));
   },
   // edit post
-  editPost({ commit }, post) {
+  editPost({ commit, state}, post) {
     return axios
       .put(
-        `https://blog-nuxt-eff9a-default-rtdb.asia-southeast1.firebasedatabase.app/posts/${post.id}.json`,
+        `https://blog-nuxt-eff9a-default-rtdb.asia-southeast1.firebasedatabase.app/posts/${post.id}.json?=${state.token}`,
         post
       )
       .then((res) => {
@@ -78,15 +80,12 @@ export const actions = {
       .catch((e) => console.log(e));
   },
   // addComment
-  addComment({ commit }, comment) {
+  addComment({commit}, comment) {
     return axios
       .post(
         `https://blog-nuxt-eff9a-default-rtdb.asia-southeast1.firebasedatabase.app/comments.json`,
         comment
       )
-      .then(() => {
-        commit("addComment", { ...comment, id:res.data.name });
-      })
       .catch(e => console.log(e))
   },
 };
@@ -95,4 +94,7 @@ export const getters = {
   getPostsLoaded(state) {
     return state.postsLoaded;
   },
+  checkAuthUser(state){
+    return state.token != null
+  }
 };
