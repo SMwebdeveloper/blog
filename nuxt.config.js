@@ -8,8 +8,10 @@ export default {
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { hid: 'description', name: 'description', content: '' },
+      { hid: 'description', name: 'description', content: 'description' },
       { name: 'format-detection', content: 'telephone=no' }
+      // { name: 'yandex-verification', content: 'KEY' }
+      // { name: 'google-site-verification', content: 'KEY' }
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
@@ -32,13 +34,25 @@ export default {
 
   // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
   buildModules: [
+    // ['@nuxtjs/google-analytics'],
+    // ['@nuxtjs/yandex-metrika',{
+    //   id: 'KEY',
+    //   websior:false,
+    //   clickmap:true,
+    //   trackLinks:true
+    // }],
   ],
+
+    // googleAnalytics: {
+    //   id: 'UA-XXX-X'
+    // }
 
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
   ],
+    
+
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
-  build: {
-  }
+  build: {}
 }
